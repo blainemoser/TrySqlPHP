@@ -1,8 +1,8 @@
 <?php
 
-namespace TrySqlPHP\Watcher;
+namespace TrySqlPHP;
 
-require_once("TrySqlPHP/Watcher/Watcher.php");
+require_once("src/Watcher.php");
 
 class TrySqlPHP extends Watcher
 {

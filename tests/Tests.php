@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
+namespace TrySqlPHP\Tests;
 
-namespace TrySqlPHP\Watcher;
+require_once("src/TrySqlPHP.php");
 
-require_once("TrySqlPHP/Watcher/TrySqlPHP.php");
-
-use TrySqlPHP\Watcher\TrySqlPHP;
+use TrySqlPHP\TrySqlPHP;
 use PHPUnit\Framework\TestCase;
+
+use const TrySqlPHP\SHELL_STATE_READY;
 
 final class WatcherTest extends TestCase
 {

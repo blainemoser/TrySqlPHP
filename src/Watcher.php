@@ -1,6 +1,6 @@
 <?php
 
-namespace TrySqlPHP\Watcher;
+namespace TrySqlPHP;
 
 const SHELL_STATE_NOT_STARTED = 0;
 const SHELL_STATE_BOOTING = 2;
