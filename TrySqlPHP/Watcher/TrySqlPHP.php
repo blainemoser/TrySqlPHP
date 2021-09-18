@@ -9,15 +9,17 @@ class TrySqlPHP extends Watcher
     /**
      * Constructs an instance of this
      * 
+     * @param int $port
+     * 
      * @return void
      */
-    public function __construct()
+    public function __construct(int $port = 0)
     {
         // register events
         pcntl_signal(SIGHUP, [$this, 'handleSigHup']);
         pcntl_signal(SIGINT, [$this, 'handleSigInt']);
         pcntl_signal(SIGTERM, [$this, 'handleSigTerm']);
-        parent::__construct();
+        parent::__construct($port);
     }
 
     /**
