@@ -21,11 +21,6 @@ class Watcher
     protected int $readyState = 0;
 
     /**
-     * @var string $password;
-     */
-    protected string $password = "";
-
-    /**
      * @var resource $process
      */
     protected $process;
@@ -75,6 +70,26 @@ class Watcher
     private array $procStatus = [];
 
     /**
+     * @var int $port
+     */
+    protected int $port;
+
+    /**
+     * @var string $host
+     */
+    protected string $host;
+
+    /**
+     * @var string $user
+     */
+    protected string $user;
+
+    /**
+     * @var string $password
+     */
+    protected string $password = "";
+
+    /**
      * Constructs an instance of watcher
      * 
      * @param int $port
@@ -83,7 +98,16 @@ class Watcher
      */
     public function __construct(int $port = 0)
     {
-        $this->start($port);
+        // TrySql default is 6603
+        $this->port = $port > 0 ? $port : 6603;
+
+        // This is not the container's IP - the MySQL service must be accessed through the host 
+        $this->host = "127.0.0.1";
+
+        // TrySql container user is always root
+        $this->user = "root";
+
+        $this->start();
     }
 
     /**
@@ -91,10 +115,13 @@ class Watcher
      * 
      * @return void
      */
-    private function start(int $port = 0): void
+    private function start(): void
     {
-        $command = "go run \$GOSRC/TrySql/main.go" . 
-            ($port > 0 ? " -p " . (string) $port : ""); // TODO replace this with the command to use the bin
+        // TODO replace this with the command to use the bin
+        $command = "go run \$GOSRC/TrySql/main.go" . ($this->port !== 6603
+            ? " -p " . (string) $this->port
+            : "");
+
         flush();
         $this->process = proc_open($command, $this->descriptors, $this->pipes);
         $this->stdIn = $this->pipes[0];
@@ -114,7 +141,7 @@ class Watcher
                     $this->refreshProcStatus();
                     $this->setPassword();
                     $streamBlocked = stream_set_blocking($this->stdOut, 0);
-                    echo $streamBlocked ? "stream unblocked\n" : "stream not unblocked \n";
+                    echo $streamBlocked ? "stream unblocked\n" : "stream still blocked\n";
                     break;
                 }
                 flush();
@@ -163,6 +190,36 @@ class Watcher
     public function getProcStatus(): array
     {
         return $this->procStatus;
+    }
+
+    /**
+     * Return Host Port exposed to 3306 in container
+     * 
+     * @return int
+     */
+    public function getPort(): int
+    {
+        return $this->port;
+    }
+
+    /**
+     * Return user, always "root" 
+     * 
+     * @return string
+     */
+    public function getUser(): string
+    {
+        return $this->user;
+    }
+
+    /**
+     * Return Host IP
+     * 
+     * @return string
+     */
+    public function getHost(): string
+    {
+        return $this->host;
     }
 
     /**
@@ -223,7 +280,7 @@ class Watcher
     /**
      * Handles any ended signal
      * 
-     *  
+     * @return void 
      */
     protected function ended()
     {
@@ -240,7 +297,7 @@ class Watcher
     public function quit(): void
     {
         $streamBlocked = stream_set_blocking($this->stdOut, 1);
-        echo $streamBlocked ? "stream blocked\n" : "stream not blocked \n";
+        echo $streamBlocked ? "stream blocked\n" : "stream still unblocked\n";
         $this->readyState = SHELL_STATE_DESTROYING;
         $this->writeToShell("quit");
         while ($this->readyState !== SHELL_STATE_DESTROYED && $s = fgets($this->stdOut)) {

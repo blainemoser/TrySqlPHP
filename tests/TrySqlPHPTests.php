@@ -48,6 +48,24 @@ final class WatcherTest extends TestCase
         $this->assertIsInt($status["pid"]);
     }
 
+    public function testGetPort()
+    {
+        $port = self::$watcher->getPort();
+        $this->assertEquals($port, 6603);
+    }
+
+    public function testGetUser()
+    {
+        $u = self::$watcher->getUser();
+        $this->assertEquals($u, "root");
+    }
+
+    public function testGetHost()
+    {
+        $h = self::$watcher->getHost();
+        $this->assertEquals($h, "127.0.0.1");
+    }
+
     public function testReadyState() 
     {
         $state = self::$watcher->getReadyState();
