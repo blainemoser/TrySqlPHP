@@ -1,12 +1,13 @@
 {
     "name": "blainemoser/trysqlphp",
     "description": "TrySql API for PHP",
-    "type": "composer-plugin",
+    "homepage": "https://github.com/blainemoser/TrySqlPHP",
     "license": "MIT",
     "authors": [
         {
-            "name": "Blaine",
-            "email": "blainemoser@outlook.com"
+            "name": "Blaine Moser",
+            "email": "blainemoser@outlook.com", 
+            "homepage": "https://github.com/blainemoser"
         }
     ],
     "require": {
