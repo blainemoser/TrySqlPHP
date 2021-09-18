@@ -2,8 +2,6 @@
 
 namespace TrySqlPHP;
 
-require 'src/Watcher.php';
-
 class TrySql extends Watcher
 {
     /**
