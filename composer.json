@@ -1,0 +1,15 @@
+{
+    "name": "blainemoser/trysqlphp",
+    "description": "TrySql API for PHP",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Blaine",
+            "email": "blainemoser@outlook.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
