@@ -15,7 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "TrySqlPHP\\TrySql\\": "src"
+            "TrySqlPHP\\TrySql\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TrySqlPHP\\Tests\\": "test/"
         }
     }
 }

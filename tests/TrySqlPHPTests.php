@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TrySqlPHPTests;
+namespace TrySqlPHP\Tests;
 
 require 'src/TrySql.php';
 
