@@ -77,11 +77,13 @@ class Watcher
     /**
      * Constructs an instance of watcher
      * 
+     * @param int $port
+     * 
      * @return void
      */
-    public function __construct()
+    public function __construct(int $port = 0)
     {
-        $this->start();
+        $this->start($port);
     }
 
     /**
@@ -89,9 +91,10 @@ class Watcher
      * 
      * @return void
      */
-    private function start(): void
+    private function start(int $port = 0): void
     {
-        $command = "go run \$GOSRC/TrySql/main.go"; // TODO replace this with the command to use the bin
+        $command = "go run \$GOSRC/TrySql/main.go" . 
+            ($port > 0 ? " -p " . (string) $port : ""); // TODO replace this with the command to use the bin
         flush();
         $this->process = proc_open($command, $this->descriptors, $this->pipes);
         $this->stdIn = $this->pipes[0];
