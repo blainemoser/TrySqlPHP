@@ -6,11 +6,16 @@
     "authors": [
         {
             "name": "Blaine Moser",
-            "email": "blainemoser@outlook.com", 
+            "email": "blainemoser@outlook.com",
             "homepage": "https://github.com/blainemoser"
         }
     ],
     "require": {
         "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "TrySqlPHP\\TrySql\\": "src"
+        }
     }
 }

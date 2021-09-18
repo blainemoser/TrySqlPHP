@@ -2,9 +2,9 @@
 
 namespace TrySqlPHP;
 
-require_once("src/Watcher.php");
+require 'src/Watcher.php';
 
-class TrySqlPHP extends Watcher
+class TrySql extends Watcher
 {
     /**
      * Constructs an instance of this

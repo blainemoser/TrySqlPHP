@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TrySqlPHP\Tests;
+namespace TrySqlPHPTests;
 
-require_once("src/TrySqlPHP.php");
+require 'src/TrySql.php';
 
-use TrySqlPHP\TrySqlPHP;
+use TrySqlPHP\TrySql;
 use PHPUnit\Framework\TestCase;
 
 use const TrySqlPHP\SHELL_STATE_READY;
@@ -17,7 +17,7 @@ final class WatcherTest extends TestCase
     /**
      * @var TrySqlPHP $watcher
      */
-    private static TrySqlPHP $watcher;
+    private static TrySql $watcher;
 
     /**
      * Constructs this test class 
@@ -26,7 +26,7 @@ final class WatcherTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$watcher = new TrySqlPHP();
+        self::$watcher = new TrySql();
     }
 
     public function testGetPassword()
