@@ -117,8 +117,7 @@ class Watcher
      */
     private function start(): void
     {
-        // TODO replace this with the command to use the bin
-        $command = "go run \$GOSRC/TrySql/main.go" . ($this->port !== 6603
+        $command = "./TrySql" . ($this->port !== 6603
             ? " -p " . (string) $this->port
             : "");
 
