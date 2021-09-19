@@ -38,6 +38,21 @@ final class WatcherTest extends TestCase
         }
     }
 
+    public function testGetMysqlCommand()
+    {
+        $command = self::$watcher->getMySqlCommand();
+        $this->assertIsString($command);
+        $this->assertStringContainsString("mysql", $command);
+        $password = self::$watcher->getPassword();
+        $this->assertStringContainsString("-p{$password}", $command);
+        $user = self::$watcher->getUser();
+        $this->assertStringContainsString("-u{$user}", $command);
+        $host = self::$watcher->getHost();
+        $this->assertStringContainsString("-h{$host}", $command);
+        $port = (string) self::$watcher->getPort();
+        $this->assertStringContainsString("-P{$port}", $command);
+    }
+
     public function testGetProcStatus()
     {
         $status = self::$watcher->getProcStatus();

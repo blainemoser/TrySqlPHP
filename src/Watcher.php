@@ -90,6 +90,11 @@ class Watcher
     protected string $password = "";
 
     /**
+     * @var string $mysqlCommand
+     */
+    protected string $mysqlCommand = "";
+    
+    /**
      * Constructs an instance of watcher
      * 
      * @param int $port
@@ -163,6 +168,7 @@ class Watcher
                     $this->readyState = SHELL_STATE_READY;
                     $this->refreshProcStatus();
                     $this->setPassword();
+                    $this->setMySqlCommand();
                     $streamBlocked = stream_set_blocking($this->stdOut, 0);
                     echo $streamBlocked ? "stream unblocked\n" : "stream still blocked\n";
                     break;
@@ -275,6 +281,12 @@ class Watcher
         $this->password = $this->getLastOut();
     }
 
+    private function setMySqlCommand(): void
+    {
+        $this->writeToShell("mysql");
+        $this->mysqlCommand = $this->getLastOut();
+    }
+
     /**
      * Gets the password
      * 
@@ -283,6 +295,16 @@ class Watcher
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * Gets the mysql command for this instance
+     * 
+     * @return string
+     */
+    public function getMySqlCommand(): string
+    {
+        return $this->mysqlCommand;
     }
 
     public function getReadyState()
