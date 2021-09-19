@@ -111,18 +111,42 @@ class Watcher
     }
 
     /**
+     * Gets the binary path for TrySql shell 
+     * 
+     * @return string
+     */
+    private function getBinPath(): string
+    {
+        $pathSplit = preg_split('/\//', __DIR__);
+        $result = [];
+        foreach ($pathSplit as $path) {
+            if (empty($path)) {
+                continue;
+            }
+            $result[] = $path;
+            if ($path == "src") {
+                break;
+            }
+        }
+        return "/" . implode("/", $result) . "/TrySql" . ($this->port !== 6603
+            ? " -p " . (string) $this->port
+            : "");
+    }
+
+    /**
      * Starts the TrySql shell, waits for input 
      * 
      * @return void
+     * @throws \Exception
      */
     private function start(): void
     {
-        $command = "./TrySql" . ($this->port !== 6603
-            ? " -p " . (string) $this->port
-            : "");
-
+        $command = $this->getBinPath();
         flush();
         $this->process = proc_open($command, $this->descriptors, $this->pipes);
+        if ($this->process === false) {
+            throw new \Exception("could not start the TrySql shell", 1);
+        }
         $this->stdIn = $this->pipes[0];
         $this->stdOut = $this->pipes[1];
         $this->stdErr = $this->pipes[2];
