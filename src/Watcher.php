@@ -274,7 +274,11 @@ class Watcher
      */
     private function getLastOut(): string
     {
-        return str_replace("> ", "", $this->lastOut);
+        return str_replace(
+            "> ",
+            "",
+            str_replace("\n", "", trim($this->lastOut))
+        );
     }
 
     /**
